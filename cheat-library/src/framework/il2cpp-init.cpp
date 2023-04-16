@@ -50,28 +50,28 @@ void init_static_offsets(LGameVersion gameVersion)
 	uintptr_t baseAddress = il2cppi_get_base_address();
 
 	// Define IL2CPP API function addresses
-	#define DO_API(OS_OFFSET, CN_OFFSET, RETURN_T, NAME, PARAMS) NAME = (RETURN_T (*) PARAMS)(baseAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
+	#define DO_API(OS_OFFSET, CN_OFFSET, RETURN_T, NAME, PARAMS) NAME = (RETURN_T (*) PARAMS)(baseAddress + SELECT_VERSION(gameVersion, 0x0, 0x0))
 	#include "il2cpp-api-functions.h"
 	#undef DO_API
 
 	// Define function addresses
-	#define DO_APP_FUNC(OS_OFFSET, CN_OFFSET, RETURN_T, NAME, PARAMS) NAME = (RETURN_T (*) PARAMS)(baseAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
-	#define DO_APP_FUNC_METHODINFO(OS_OFFSET, CN_OFFSET, NAME) NAME = (struct MethodInfo **)(baseAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
+	#define DO_APP_FUNC(OS_OFFSET, CN_OFFSET, RETURN_T, NAME, PARAMS) NAME = (RETURN_T (*) PARAMS)(baseAddress + SELECT_VERSION(gameVersion, 0x0, 0x0))
+	#define DO_APP_FUNC_METHODINFO(OS_OFFSET, CN_OFFSET, NAME) NAME = (struct MethodInfo **)(baseAddress + SELECT_VERSION(gameVersion, 0x0, 0x0))
 	#include "il2cpp-functions.h"
 	#undef DO_APP_FUNC
 	#undef DO_APP_FUNC_METHODINFO
 
 	// Define TypeInfo variables
-	#define DO_SINGLETONEDEF(OS_OFFSET, CN_OFFSET, NAME) NAME ## __TypeInfo = (Singleton_1__Class**) (baseAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
-	#define DO_TYPEDEF(OS_OFFSET, CN_OFFSET, NAME) NAME ## __TypeInfo = (NAME ## __Class**) (baseAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
+	#define DO_SINGLETONEDEF(OS_OFFSET, CN_OFFSET, NAME) NAME ## __TypeInfo = (Singleton_1__Class**) (baseAddress + SELECT_VERSION(gameVersion, 0x0, 0x0))
+	#define DO_TYPEDEF(OS_OFFSET, CN_OFFSET, NAME) NAME ## __TypeInfo = (NAME ## __Class**) (baseAddress + SELECT_VERSION(gameVersion, 0x0, 0x0)
 	#include "il2cpp-types-ptr.h"
 	#undef DO_TYPEDEF
 	#undef DO_SINGLETONEDEF
 
 	uintptr_t unityPlayerAddress = il2cppi_get_unity_address();
 	// Define UnityPlayer functions
-	#define DO_APP_FUNC(OS_OFFSET, CN_OFFSET, RETURN_T, NAME, PARAMS) NAME = (RETURN_T (*) PARAMS)(unityPlayerAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
-	#define DO_APP_FUNC_METHODINFO(OS_OFFSET, CN_OFFSET, NAME) NAME = (struct MethodInfo **)(unityPlayerAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
+	#define DO_APP_FUNC(OS_OFFSET, CN_OFFSET, RETURN_T, NAME, PARAMS) NAME = (RETURN_T (*) PARAMS)(unityPlayerAddress + SELECT_VERSION(gameVersion, 0x0, 0x0))
+	#define DO_APP_FUNC_METHODINFO(OS_OFFSET, CN_OFFSET, NAME) NAME = (struct MethodInfo **)(unityPlayerAddress + SELECT_VERSION(gameVersion, 0x0, 0x0))
 	#include "il2cpp-unityplayer-functions.h"
 	#undef DO_APP_FUNC
 	#undef DO_APP_FUNC_METHODINFO
@@ -105,22 +105,22 @@ void init_scanned_offsets(LGameVersion gameVersion)
 	il2cpp_thread_attach(il2cpp_domain_get());
 
 	// Define function addresses
-	#define DO_APP_FUNC(OS_OFFSET, CN_OFFSET, RETURN_T, NAME, PARAMS) SELECT_OR(NAME, RETURN_T (*) PARAMS, scanner.Search("UserAssembly.dll", #NAME), baseAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
-	#define DO_APP_FUNC_METHODINFO(OS_OFFSET, CN_OFFSET, NAME) SELECT_OR(NAME, struct MethodInfo **, scanner.SearchMethodInfo(#NAME), baseAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
+	#define DO_APP_FUNC(OS_OFFSET, CN_OFFSET, RETURN_T, NAME, PARAMS) SELECT_OR(NAME, RETURN_T (*) PARAMS, scanner.Search("UserAssembly.dll", #NAME), baseAddress + SELECT_VERSION(gameVersion, 0x0, 0x0))
+	#define DO_APP_FUNC_METHODINFO(OS_OFFSET, CN_OFFSET, NAME) SELECT_OR(NAME, struct MethodInfo **, scanner.SearchMethodInfo(#NAME), baseAddress + SELECT_VERSION(gameVersion, 0x0, 0x0))
 	#include "il2cpp-functions.h"
 	#undef DO_APP_FUNC
 	#undef DO_APP_FUNC_METHODINFO
 
 	// Define TypeInfo variables
-	#define DO_SINGLETONEDEF(OS_OFFSET, CN_OFFSET, NAME) SELECT_OR(NAME ## __TypeInfo, Singleton_1__Class**, scanner.SearchTypeInfo(#NAME), baseAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
-	#define DO_TYPEDEF(OS_OFFSET, CN_OFFSET, NAME) SELECT_OR(NAME ## __TypeInfo, NAME ## __Class**, scanner.SearchTypeInfo(#NAME), baseAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
+	#define DO_SINGLETONEDEF(OS_OFFSET, CN_OFFSET, NAME) SELECT_OR(NAME ## __TypeInfo, Singleton_1__Class**, scanner.SearchTypeInfo(#NAME), baseAddress + SELECT_VERSION(gameVersion, 0x0, 0x0))
+	#define DO_TYPEDEF(OS_OFFSET, CN_OFFSET, NAME) SELECT_OR(NAME ## __TypeInfo, NAME ## __Class**, scanner.SearchTypeInfo(#NAME), baseAddress + SELECT_VERSION(gameVersion, 0x0, 0x0))
 	#include "il2cpp-types-ptr.h"
 	#undef DO_TYPEDEF
 	#undef DO_SINGLETONEDEF
 
 	uintptr_t unityPlayerAddress = il2cppi_get_unity_address();
 	// Define UnityPlayer functions
-	#define DO_APP_FUNC(OS_OFFSET, CN_OFFSET, RETURN_T, NAME, PARAMS) SELECT_OR(NAME, RETURN_T (*) PARAMS, scanner.Search("UnityPlayer.dll", #NAME), unityPlayerAddress + SELECT_VERSION(gameVersion, OS_OFFSET, CN_OFFSET))
+	#define DO_APP_FUNC(OS_OFFSET, CN_OFFSET, RETURN_T, NAME, PARAMS) SELECT_OR(NAME, RETURN_T (*) PARAMS, scanner.Search("UnityPlayer.dll", #NAME), unityPlayerAddress + SELECT_VERSION(gameVersion, 0x0, 0x0))
 	#include "il2cpp-unityplayer-functions.h"
 	#undef DO_APP_FUNC
 
