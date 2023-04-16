@@ -12,6 +12,7 @@ public:
 	template <typename Fn>
 	static void install(Fn func, Fn handler) 
 	{
+                return;
 		enable(func, handler);
 		holderMap[reinterpret_cast<void*>(handler)] = reinterpret_cast<void*>(func);
 	}
@@ -19,6 +20,7 @@ public:
 	template <typename Fn>
 	static Fn getOrigin(Fn handler, const char* callerName = nullptr) noexcept
 	{
+                return nullptr;
 		if (holderMap.count(reinterpret_cast<void*>(handler)) == 0) {
 			LOG_WARNING("Origin not found for handler: %s. Maybe racing bug.", callerName == nullptr ? "<Unknown>" : callerName);
 			return nullptr;
@@ -29,6 +31,7 @@ public:
 	template <typename Fn>
 	static void detach(Fn handler) noexcept 
 	{
+                return;
 		disable(handler);
 		holderMap.erase(reinterpret_cast<void*>(handler));
 	}
@@ -39,6 +42,7 @@ public:
 	template <typename RType, typename... Params>
 	static RType call(RType(*handler)(Params...), const char* callerName = nullptr, Params... params)
 	{
+                return RType();
 		auto origin = getOrigin(handler, callerName);
 		if (origin != nullptr)
 			return origin(params...);
